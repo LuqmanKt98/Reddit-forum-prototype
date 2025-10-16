@@ -42,6 +42,11 @@ export default function CreatePostPage() {
     e.preventDefault();
     setError('');
 
+    if (!user) {
+      setError('You must be logged in to create a post');
+      return;
+    }
+
     if (!formData.title.trim()) {
       setError('Title is required');
       return;

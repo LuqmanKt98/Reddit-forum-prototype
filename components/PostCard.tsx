@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Post } from '@/lib/types';
 import { useState } from 'react';
 
@@ -52,7 +53,7 @@ export default function PostCard({ post }: PostCardProps) {
       <div className="glass-effect rounded-2xl overflow-hidden hover:bg-white/10 transition-all duration-300 group hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/20">
         {post.image && (
           <div className="relative h-48 overflow-hidden">
-            <img src={imageUrl} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <Image src={imageUrl} alt={post.title} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
           </div>
         )}

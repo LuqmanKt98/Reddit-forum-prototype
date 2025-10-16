@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import {
-  getPosts, deletePost, getCurrentUser, getUsers, deleteUser,
+  getPosts, deletePost, getCurrentUser, getUsers,
   banUser, unbanUser, promoteToModerator, promoteToAdmin, demoteToUser,
   pinPost, unpinPost, lockPost, unlockPost, getCommunities,
   deleteCommunity
