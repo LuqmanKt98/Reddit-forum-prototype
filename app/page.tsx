@@ -1,103 +1,163 @@
-import Image from "next/image";
+'use client';
+
+import { useEffect, useState } from 'react';
+import PostCard from '@/components/PostCard';
+import Sidebar from '@/components/Sidebar';
+import { getPosts, getCommunities } from '@/lib/storage';
+import { initializeStorage } from '@/lib/storage';
+import { Post, Community } from '@/lib/types';
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [communities, setCommunities] = useState<Community[]>([]);
+  const [mounted, setMounted] = useState(false);
+  const [sortBy, setSortBy] = useState<'new' | 'hot' | 'top'>('new');
+  const [selectedCommunity, setSelectedCommunity] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    initializeStorage();
+    setMounted(true);
+    setCommunities(getCommunities());
+  }, []);
+
+  useEffect(() => {
+    const allPosts = getPosts();
+
+    // Filter by community
+    let filteredPosts = allPosts;
+    if (selectedCommunity !== 'all') {
+      filteredPosts = filteredPosts.filter(p => p.community === selectedCommunity);
+    }
+
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filteredPosts = filteredPosts.filter(p =>
+        p.title.toLowerCase().includes(query) ||
+        p.content.toLowerCase().includes(query) ||
+        p.author.toLowerCase().includes(query)
+      );
+    }
+
+    // Sort posts: pinned first, then by selected sort
+    const sortedPosts = [...filteredPosts].sort((a, b) => {
+      // Pinned posts first
+      if (a.isPinned && !b.isPinned) return -1;
+      if (!a.isPinned && b.isPinned) return 1;
+
+      // Then sort by selected option
+      if (sortBy === 'new') {
+        return b.timestamp - a.timestamp;
+      } else if (sortBy === 'hot') {
+        const aScore = a.upvotes - a.downvotes;
+        const bScore = b.upvotes - b.downvotes;
+        return bScore - aScore;
+      } else if (sortBy === 'top') {
+        return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
+      }
+      return 0;
+    });
+
+    setPosts(sortedPosts);
+  }, [sortBy, selectedCommunity, searchQuery]);
+
+  if (!mounted) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="text-center">Loading...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="mb-8 text-center">
+          <h1 className="text-5xl font-bold mb-4 gradient-text">✨ Discover Amazing Content</h1>
+          <p className="text-gray-400 text-lg">Join the conversation with developers worldwide</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            {/* Search Bar */}
+            <div className="mb-6">
+              <input
+                type="text"
+                placeholder="Search posts..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              />
+            </div>
+
+            {/* Community Filter */}
+            <div className="mb-6">
+              <p className="text-sm text-gray-400 mb-2">Communities</p>
+              <div className="flex gap-2 flex-wrap">
+                <button
+                  onClick={() => setSelectedCommunity('all')}
+                  className={`px-4 py-2 rounded-lg font-semibold transition ${
+                    selectedCommunity === 'all'
+                      ? 'bg-purple-500/30 text-purple-400 border border-purple-500'
+                      : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'
+                  }`}
+                >
+                  All Communities
+                </button>
+                {communities.map((community) => (
+                  <button
+                    key={community.id}
+                    onClick={() => setSelectedCommunity(community.name)}
+                    className={`px-4 py-2 rounded-lg font-semibold transition ${
+                      selectedCommunity === community.name
+                        ? 'bg-purple-500/30 text-purple-400 border border-purple-500'
+                        : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'
+                    }`}
+                  >
+                    {community.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Sort Options */}
+            <div className="flex gap-2 mb-6 flex-wrap">
+              <p className="text-sm text-gray-400 w-full">Sort by</p>
+              {['new', 'hot', 'top'].map((option) => (
+                <button
+                  key={option}
+                  onClick={() => setSortBy(option as any)}
+                  className={`px-4 py-2 rounded-lg font-semibold transition ${
+                    sortBy === option
+                      ? 'bg-purple-500/30 text-purple-400 border border-purple-500'
+                      : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'
+                  }`}
+                >
+                  {option === 'new' && '🆕 New'}
+                  {option === 'hot' && '🔥 Hot'}
+                  {option === 'top' && '⭐ Top'}
+                </button>
+              ))}
+            </div>
+
+            <div className="space-y-5">
+              {posts.length === 0 ? (
+              <div className="glass-effect rounded-2xl p-12 text-center">
+                <div className="text-6xl mb-4">🚀</div>
+                <p className="text-gray-300 text-lg">No posts yet. Be the first to create one!</p>
+              </div>
+            ) : (
+              posts.map((post) => <PostCard key={post.id} post={post} />)
+            )}
+            </div>
+          </div>
+
+          <div className="hidden lg:block">
+            <Sidebar />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
