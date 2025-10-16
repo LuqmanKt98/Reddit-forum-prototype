@@ -1,0 +1,28 @@
+GITHUB PUSH INSTRUCTIONS
+========================
+
+Your local repository is ready! Follow these steps:
+
+1. Go to: https://github.com/new
+
+2. Create a new repository:
+   - Repository name: reddit-forum-prototype
+   - Description: Reddit-style forum prototype with Next.js, React, TypeScript
+   - Visibility: Private (recommended for client work)
+   - DO NOT initialize with README
+   - Click "Create repository"
+
+3. After creating, run these commands in your terminal:
+
+   cd "c:\Users\luqma\OneDrive\Desktop\Reddit Style app\reddit-forum"
+   
+   git remote add origin https://github.com/YOUR_USERNAME/reddit-forum-prototype.git
+   
+   git push -u origin main
+
+4. Enter your GitHub credentials when prompted
+
+5. Done! Your repository will be live at:
+   https://github.com/YOUR_USERNAME/reddit-forum-prototype
+
+Note: Replace YOUR_USERNAME with your actual GitHub username (LuqmanKt98)

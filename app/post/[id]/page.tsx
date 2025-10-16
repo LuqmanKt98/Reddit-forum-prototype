@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { getPostById, updatePostVotes, deletePost, getCurrentUser, updatePost } from '@/lib/storage';
+import { getPostById, deletePost, getCurrentUser, updatePost } from '@/lib/storage';
 import { Post, User } from '@/lib/types';
 import CommentSection from '@/components/CommentSection';
 import Link from 'next/link';

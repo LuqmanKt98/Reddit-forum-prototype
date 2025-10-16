@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { Post } from '@/lib/types';
 import { useState } from 'react';
-import { updatePostVotes } from '@/lib/storage';
 
 interface PostCardProps {
   post: Post;

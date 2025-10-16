@@ -169,7 +169,7 @@ export default function ProfilePage() {
           {['posts', 'comments', 'about'].map((tab) => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab as any)}
+              onClick={() => setActiveTab(tab as 'posts' | 'comments' | 'about')}
               className={`px-4 py-2 font-semibold border-b-2 transition ${
                 activeTab === tab
                   ? 'border-purple-500 text-purple-400'

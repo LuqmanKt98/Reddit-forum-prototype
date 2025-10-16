@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 export default function CreatePostPage() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{ id: string; username: string } | null>(null);
   const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState({
     title: '',

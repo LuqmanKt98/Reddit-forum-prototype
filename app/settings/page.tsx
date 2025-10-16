@@ -82,7 +82,7 @@ export default function SettingsPage() {
               {['profile', 'account', 'privacy'].map((tab) => (
                 <button
                   key={tab}
-                  onClick={() => setActiveTab(tab as any)}
+                  onClick={() => setActiveTab(tab as 'profile' | 'account' | 'privacy')}
                   className={`w-full px-4 py-3 text-left font-semibold transition border-l-4 ${
                     activeTab === tab
                       ? 'bg-purple-500/20 border-purple-500 text-purple-400'

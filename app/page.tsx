@@ -127,7 +127,7 @@ export default function Home() {
               {['new', 'hot', 'top'].map((option) => (
                 <button
                   key={option}
-                  onClick={() => setSortBy(option as any)}
+                  onClick={() => setSortBy(option as 'new' | 'hot' | 'top')}
                   className={`px-4 py-2 rounded-lg font-semibold transition ${
                     sortBy === option
                       ? 'bg-purple-500/30 text-purple-400 border border-purple-500'

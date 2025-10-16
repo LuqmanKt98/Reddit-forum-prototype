@@ -11,7 +11,7 @@ interface CommentSectionProps {
 export default function CommentSection({ postId }: CommentSectionProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{ id: string; username: string; avatar: string } | null>(null);
   const [mounted, setMounted] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState('');

@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import {
-  getPosts, deletePost, getCurrentUser, getUsers, updateUser, deleteUser,
+  getPosts, deletePost, getCurrentUser, getUsers, deleteUser,
   banUser, unbanUser, promoteToModerator, promoteToAdmin, demoteToUser,
-  pinPost, unpinPost, lockPost, unlockPost, getCommunities, addCommunity,
-  updateCommunity, deleteCommunity, getCommentsByPostId, deleteComment
+  pinPost, unpinPost, lockPost, unlockPost, getCommunities,
+  deleteCommunity
 } from '@/lib/storage';
-import { Post, User, Community, Comment } from '@/lib/types';
+import { Post, User, Community } from '@/lib/types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -92,12 +92,7 @@ export default function AdminPage() {
     setUsers(getUsers());
   };
 
-  const handleDeleteUser = (userId: string) => {
-    if (confirm('Delete this user? This cannot be undone.')) {
-      deleteUser(userId);
-      setUsers(getUsers());
-    }
-  };
+
 
   // Community handlers
   const handleDeleteCommunity = (communityId: string) => {
@@ -133,7 +128,7 @@ export default function AdminPage() {
           {['dashboard', 'posts', 'users', 'comments', 'communities'].map((tab) => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab as any)}
+              onClick={() => setActiveTab(tab as 'dashboard' | 'posts' | 'users' | 'comments' | 'communities')}
               className={`px-4 py-2 font-semibold border-b-2 transition whitespace-nowrap ${
                 activeTab === tab
                   ? 'border-purple-500 text-purple-400'
