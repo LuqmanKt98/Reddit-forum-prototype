@@ -36,6 +36,7 @@ export default function CommentSection({ postId }: CommentSectionProps) {
       timestamp: Date.now(),
       upvotes: 0,
       downvotes: 0,
+      postId,
     };
 
     addComment(postId, comment);
