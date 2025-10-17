@@ -15,6 +15,7 @@ export default function Navbar() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -70,51 +71,76 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {user ? (
               <>
                 <Link
                   href="/create"
-                  className="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg shadow-purple-500/30"
                 >
-                  <span>✍️</span> Create
+                  <span>✍️</span> <span className="hidden lg:inline">Create</span>
+                </Link>
+                <Link href="/create" className="sm:hidden p-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl">
+                  ✍️
                 </Link>
                 <Link
                   href={`/profile/${user.username}`}
-                  className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all"
+                  className="hidden md:flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all"
                 >
                   <span className="text-xl">{user.avatar}</span>
                   <span className="text-sm font-semibold text-white">{user.username}</span>
                 </Link>
-                <Link
-                  href="/settings"
-                  className="px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all"
-                >
-                  ⚙️
-                </Link>
                 <button
-                  onClick={handleLogout}
-                  className="px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="md:hidden p-2 text-white hover:bg-white/10 rounded-xl transition-all"
                 >
-                  Logout
+                  {mobileMenuOpen ? '✕' : '☰'}
                 </button>
-                <Link
-                  href="/admin"
-                  className="px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all"
-                >
-                  👑
-                </Link>
+                <div className="hidden md:flex items-center gap-2">
+                  <Link href="/settings" className="p-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all">
+                    ⚙️
+                  </Link>
+                  <Link href="/admin" className="p-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all">
+                    👑
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="px-3 py-2 text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/5 rounded-xl transition-all"
+                  >
+                    Logout
+                  </button>
+                </div>
               </>
             ) : (
               <Link
                 href="/login"
-                className="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg shadow-purple-500/30"
+                className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg shadow-purple-500/30"
               >
                 Login
               </Link>
             )}
           </div>
         </div>
+        {mobileMenuOpen && user && (
+          <div className="md:hidden border-t border-white/10 py-4 space-y-2">
+            <Link href={`/profile/${user.username}`} className="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-xl transition-all" onClick={() => setMobileMenuOpen(false)}>
+              <span className="text-2xl">{user.avatar}</span>
+              <span className="font-semibold text-white">{user.username}</span>
+            </Link>
+            <Link href="/settings" className="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-xl transition-all text-gray-300" onClick={() => setMobileMenuOpen(false)}>
+              <span className="text-xl">⚙️</span>
+              <span>Settings</span>
+            </Link>
+            <Link href="/admin" className="flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-xl transition-all text-gray-300" onClick={() => setMobileMenuOpen(false)}>
+              <span className="text-xl">👑</span>
+              <span>Admin</span>
+            </Link>
+            <button onClick={() => { handleLogout(); setMobileMenuOpen(false); }} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 rounded-xl transition-all text-gray-300 text-left">
+              <span className="text-xl">🚪</span>
+              <span>Logout</span>
+            </button>
+          </div>
+        )}
       </div>
     </nav>
   );

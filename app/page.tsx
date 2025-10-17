@@ -73,9 +73,9 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="mb-8 text-center">
-          <h1 className="text-5xl font-bold mb-4 gradient-text">✨ Discover Amazing Content</h1>
-          <p className="text-gray-400 text-lg">Join the conversation with developers worldwide</p>
+        <div className="mb-6 text-center">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 gradient-text">✨ Discover Amazing Content</h1>
+          <p className="text-gray-400 text-sm sm:text-base lg:text-lg">Join the conversation with developers worldwide</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -97,7 +97,7 @@ export default function Home() {
               <div className="flex gap-2 flex-wrap">
                 <button
                   onClick={() => setSelectedCommunity('all')}
-                  className={`px-4 py-2 rounded-lg font-semibold transition ${
+                  className={`px-3 py-2 text-sm rounded-lg font-semibold transition ${
                     selectedCommunity === 'all'
                       ? 'bg-purple-500/30 text-purple-400 border border-purple-500'
                       : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'
@@ -109,7 +109,7 @@ export default function Home() {
                   <button
                     key={community.id}
                     onClick={() => setSelectedCommunity(community.name)}
-                    className={`px-4 py-2 rounded-lg font-semibold transition ${
+                    className={`px-3 py-2 text-sm rounded-lg font-semibold transition ${
                       selectedCommunity === community.name
                         ? 'bg-purple-500/30 text-purple-400 border border-purple-500'
                         : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'
@@ -128,7 +128,7 @@ export default function Home() {
                 <button
                   key={option}
                   onClick={() => setSortBy(option as 'new' | 'hot' | 'top')}
-                  className={`px-4 py-2 rounded-lg font-semibold transition ${
+                  className={`px-3 py-2 text-sm rounded-lg font-semibold transition ${
                     sortBy === option
                       ? 'bg-purple-500/30 text-purple-400 border border-purple-500'
                       : 'bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10'

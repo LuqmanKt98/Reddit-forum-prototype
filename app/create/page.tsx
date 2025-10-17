@@ -89,9 +89,9 @@ export default function CreatePostPage() {
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="glass-effect rounded-2xl p-8">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold gradient-text mb-2">✍️ Create a Post</h1>
-            <p className="text-gray-400">Share your thoughts with the community</p>
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-3xl sm:text-4xl font-bold gradient-text mb-2">✍️ Create a Post</h1>
+            <p className="text-gray-400 text-sm sm:text-base">Share your thoughts with the community</p>
           </div>
 
           {/* Form */}
@@ -187,16 +187,16 @@ export default function CreatePostPage() {
           {error && <div className="p-4 bg-pink-500/10 border border-pink-500/20 rounded-lg text-pink-300 text-sm">{error}</div>}
 
           {/* Buttons */}
-          <div className="flex gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
             <button
               type="submit"
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg shadow-purple-500/30"
+              className="w-full sm:flex-1 px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:from-purple-700 hover:to-pink-700 transition-all shadow-lg shadow-purple-500/30"
             >
               ✍️ Post
             </button>
             <Link
               href="/"
-              className="flex-1 px-6 py-3 border border-white/10 text-gray-300 rounded-xl font-semibold hover:bg-white/5 transition-all text-center"
+              className="w-full sm:flex-1 px-6 py-3 border border-white/10 text-gray-300 rounded-xl font-semibold hover:bg-white/5 transition-all text-center"
             >
               Cancel
             </Link>

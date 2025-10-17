@@ -111,17 +111,17 @@ export default function PostDetailPage() {
         </Link>
 
       {/* Post */}
-      <div className="glass-effect rounded-2xl p-8 mb-8">
-        <div className="flex gap-6">
+      <div className="glass-effect rounded-2xl p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
           {/* Voting */}
-          <div className="flex flex-col items-center gap-3 bg-white/5 rounded-xl p-4 h-fit">
+          <div className="flex sm:flex-col items-center justify-center sm:justify-start gap-4 sm:gap-3 bg-white/5 rounded-xl p-3 sm:p-4 h-fit order-2 sm:order-1">
             <button
               onClick={handleUpvote}
               className="text-gray-400 hover:text-purple-400 transition text-2xl hover:scale-110"
             >
               ⬆️
             </button>
-            <span className="text-lg font-bold text-white w-8 text-center">
+            <span className="text-base sm:text-lg font-bold text-white sm:w-8 text-center">
               {upvotes - downvotes}
             </span>
             <button
@@ -133,10 +133,10 @@ export default function PostDetailPage() {
           </div>
 
           {/* Content */}
-          <div className="flex-1">
+          <div className="flex-1 order-1 sm:order-2">
             {/* Header */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2 text-sm text-gray-400 flex-wrap">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-3">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-400 flex-wrap">
                 <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full font-semibold text-xs">{post.community}</span>
                 <span>•</span>
                 <span>Posted by {post.author}</span>
@@ -170,10 +170,10 @@ export default function PostDetailPage() {
                 type="text"
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
-                className="w-full text-4xl font-bold bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white mb-6 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full text-2xl sm:text-3xl lg:text-4xl font-bold bg-white/5 border border-white/10 rounded-lg px-3 sm:px-4 py-2 text-white mb-4 sm:mb-6 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             ) : (
-              <h1 className="text-4xl font-bold gradient-text mb-6">{post.title}</h1>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold gradient-text mb-4 sm:mb-6">{post.title}</h1>
             )}
 
             {/* Content */}
@@ -217,7 +217,7 @@ export default function PostDetailPage() {
             )}
 
             {/* Stats */}
-            <div className="flex gap-6 text-gray-400 text-sm border-t border-white/10 pt-6">
+            <div className="flex flex-wrap gap-3 sm:gap-6 text-gray-400 text-xs sm:text-sm border-t border-white/10 pt-4 sm:pt-6">
               <button className="flex items-center gap-1 hover:text-white hover:bg-white/5 px-3 py-2 rounded-lg transition">
                 💬 {post.commentsCount} Comments
               </button>

@@ -58,15 +58,15 @@ export default function PostCard({ post }: PostCardProps) {
           </div>
         )}
         
-        <div className="p-5">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3 text-xs text-gray-400">
-              <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full font-semibold">{post.community}</span>
+        <div className="p-4 sm:p-5">
+          <div className="flex items-center justify-between mb-3 flex-wrap gap-2">
+            <div className="flex items-center gap-2 sm:gap-3 text-xs text-gray-400 flex-wrap">
+              <span className="px-2 sm:px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full font-semibold text-xs">{post.community}</span>
               <span className="flex items-center gap-1">
-                <span>👤</span> {post.author}
+                <span>👤</span> <span className="hidden sm:inline">{post.author}</span>
               </span>
-              <span>•</span>
-              <span>{formatTime(post.timestamp)}</span>
+              <span className="hidden sm:inline">•</span>
+              <span className="hidden sm:inline">{formatTime(post.timestamp)}</span>
             </div>
             {post.isPinned && (
               <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded text-xs font-semibold">📌 Pinned</span>
@@ -76,32 +76,32 @@ export default function PostCard({ post }: PostCardProps) {
             )}
           </div>
 
-          <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400 transition-all">
+          <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 line-clamp-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400 transition-all">
             {post.title}
           </h3>
 
-          <p className="text-gray-300 text-sm mb-4 line-clamp-2">{post.content}</p>
+          <p className="text-gray-300 text-sm mb-3 sm:mb-4 line-clamp-2">{post.content}</p>
 
-          <div className="flex items-center justify-between pt-4 border-t border-white/10">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-lg hover:bg-white/10 transition-all">
-                <button onClick={handleUpvote} className="text-gray-400 hover:text-purple-400 transition">
+          <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-white/10">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 bg-white/5 rounded-lg hover:bg-white/10 transition-all">
+                <button onClick={handleUpvote} className="text-gray-400 hover:text-purple-400 transition text-sm sm:text-base">
                   ⬆️
                 </button>
-                <span className="text-sm font-bold text-white">{upvotes - downvotes}</span>
-                <button onClick={handleDownvote} className="text-gray-400 hover:text-pink-400 transition">
+                <span className="text-xs sm:text-sm font-bold text-white">{upvotes - downvotes}</span>
+                <button onClick={handleDownvote} className="text-gray-400 hover:text-pink-400 transition text-sm sm:text-base">
                   ⬇️
                 </button>
               </div>
-              <button className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-lg hover:bg-white/10 transition-all text-gray-300 hover:text-white">
-                💬 <span className="text-sm font-semibold">{post.commentsCount}</span>
+              <button className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 bg-white/5 rounded-lg hover:bg-white/10 transition-all text-gray-300 hover:text-white">
+                💬 <span className="text-xs sm:text-sm font-semibold">{post.commentsCount}</span>
               </button>
             </div>
-            <div className="flex items-center gap-2">
-              <button className="p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-all text-gray-400 hover:text-white">
+            <div className="flex items-center gap-1 sm:gap-2">
+              <button className="p-1.5 sm:p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-all text-gray-400 hover:text-white text-sm sm:text-base">
                 🔗
               </button>
-              <button className="p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-all text-gray-400 hover:text-yellow-400">
+              <button className="p-1.5 sm:p-2 bg-white/5 rounded-lg hover:bg-white/10 transition-all text-gray-400 hover:text-yellow-400 text-sm sm:text-base">
                 ⭐
               </button>
             </div>
